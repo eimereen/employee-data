@@ -41,6 +41,7 @@ public class DBHelper extends SQLiteOpenHelper implements DatabaseCrud{
         int datehired = cursor.getColumnIndex("datehired");
         int bday = cursor.getColumnIndex("birthday");
         int address = cursor.getColumnIndex("address");
+
         if (cursor.moveToFirst()){
             do{
                 Employee employee = new Employee();
@@ -50,7 +51,6 @@ public class DBHelper extends SQLiteOpenHelper implements DatabaseCrud{
                 employee.setDatehired(cursor.getString(datehired));
                 employee.setBday(cursor.getString(bday));
                 employee.setAddress(cursor.getString(address));
-
 
                 employees.add(employee);
             }while (cursor.moveToNext());
@@ -80,14 +80,13 @@ public class DBHelper extends SQLiteOpenHelper implements DatabaseCrud{
         contentValues.put("name", name);
         contentValues.put("position", position);
         contentValues.put("datehired", datehired);
-        contentValues.put("bday", birthday);
+        //source of error: bday, changed to birthday
+        contentValues.put("birthday", birthday);
         contentValues.put("address", address);
-        Cursor cursor = DB.rawQuery("Select * from employeedetails where id = ?", new String[]{id});
-        if (cursor.getCount() > 0) {
-            long result = DB.update("employeedetails", contentValues, "name=?", new String[]{id});
-            return result !=-1;
-        }
-        return false;
+        // source of error: cursor object, no need to check if the cursor is 0 or more than 0, the id is unique this line is deleted
+        // source of error: name changed to id, line 87
+        long result = DB.update("employeedetails", contentValues, "id = ?", new String[]{id});
+        return result !=-1;
     }
 
     @Override

@@ -75,16 +75,16 @@ public class AddAndUpdate extends AppCompatActivity implements View.OnClickListe
                         String strDatehired = datehired.getText().toString();
                         String strBirthday = birthday.getText().toString();
                         String strAddress = address.getText().toString();
-                        if (dbHelper.updateData(strId, strName, strPosition, strDatehired, strBirthday, strAddress)){
+
+                        if (dbHelper.updateData(strId, strName, strPosition, strDatehired, strBirthday, strAddress))
                             Toast.makeText(this, "Successfully Updated", Toast.LENGTH_SHORT).show();
-                            Intent goingback = new Intent(this, ViewActivity.class);
-                            startActivity(goingback);
-                            break;
-                        }
-                        Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+
+                        // to update the displayed value of employees
+                        Intent intent = new Intent(this, ViewActivity.class);
+                        startActivity(intent);
                 }
-
-
                 break;
         }
     }

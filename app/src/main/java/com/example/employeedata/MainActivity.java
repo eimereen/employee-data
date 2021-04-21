@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final String HEADERNAME = "add employee";
         switch (v.getId()){
             case R.id.btnAdd:
+                // new activity
                 Intent addActivity = new Intent(this, AddAndUpdate.class);
                 addActivity.putExtra("number",1);
                 addActivity.putExtra("decided", HEADERNAME);

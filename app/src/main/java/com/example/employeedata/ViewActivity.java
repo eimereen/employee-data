@@ -21,14 +21,20 @@ public class ViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
-
+        
+        // db declaration
         dbHelper = new DBHelper(this);
-        arrayList = new ArrayList<>();
-        arrayList.add(new Employee(1, "Junie", "Manager", "hello", "hi", "boom"));
+        // arraylist
+        arrayList = new ArrayList<>(dbHelper.getData());
+        // recycler view
         parent = findViewById(R.id.employee_list);
+        // adapter
         adapter = new ViewListAdapter(this);
+        // setting up the arraylist in viewlistadapter
         adapter.setListOfEmployees(arrayList);
+        // setting up the layout for recyclerview
         parent.setLayoutManager(new GridLayoutManager(this, 1));
+        // integrate the adapter in recyclerview
         parent.setAdapter(adapter);
 
     }

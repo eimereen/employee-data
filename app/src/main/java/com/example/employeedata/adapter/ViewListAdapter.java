@@ -30,7 +30,7 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
     }
 
     public void setListOfEmployees(ArrayList<Employee> listOfEmployees) {
-        listOfEmployees = listOfEmployees;
+        this.listOfEmployees = listOfEmployees;
     }
 
     @NonNull
@@ -42,19 +42,23 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewListAdapter.ViewHolder holder, int position) {
-        holder.id.setText(listOfEmployees.get(position).getId());
-        holder.name.setText(listOfEmployees.get(position).getName());
-        holder.position.setText(listOfEmployees.get(position).getPosition());
-        holder.datehired.setText(listOfEmployees.get(position).getDatehired());
-        holder.birthday.setText(listOfEmployees.get(position).getBday());
-        holder.address.setText(listOfEmployees.get(position).getAddress());
+
+        // source of error : String needed but provided integer, solution String.valueOf() method
+        // adding labels
+        holder.id.setText("id "+String.valueOf(listOfEmployees.get(position).getId()));
+
+        holder.name.setText("Name: "+listOfEmployees.get(position).getName());
+        holder.position.setText("Positios: "+listOfEmployees.get(position).getPosition());
+        holder.datehired.setText("Date Hired: "+listOfEmployees.get(position).getDatehired());
+        holder.birthday.setText("Birthday: "+listOfEmployees.get(position).getBday());
+        holder.address.setText("Address: "+listOfEmployees.get(position).getAddress());
         holder.update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent updateActivity = new Intent(context, AddAndUpdate.class);
                 updateActivity.putExtra("number", -1);
                 updateActivity.putExtra("decided", "update employees");
-                updateActivity.putExtra("id", listOfEmployees.get(position).getId());
+                updateActivity.putExtra("id", String.valueOf(listOfEmployees.get(position).getId()));
                 updateActivity.putExtra("name",listOfEmployees.get(position).getName());
                 updateActivity.putExtra("position", listOfEmployees.get(position).getPosition());
                 updateActivity.putExtra("date hired", listOfEmployees.get(position).getDatehired());
@@ -71,8 +75,6 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
                     Toast.makeText(context, "Successfully Deleted", Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(context, "Something Went wrong", Toast.LENGTH_SHORT).show();
-
-
             }
         });
 
@@ -80,8 +82,7 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-
-        return listOfEmployees.size();
+        return this.listOfEmployees.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
         private CardView cardViewparent;
